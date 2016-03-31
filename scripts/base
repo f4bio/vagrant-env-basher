@@ -9,3 +9,10 @@ sudo apt-get update -qq > /dev/null
 
 # install useful packages for development
 sudo apt-get install -qq git > /dev/null
+
+# http://serverfault.com/a/500778
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+locale-gen en_US.UTF-8
+dpkg-reconfigure locales

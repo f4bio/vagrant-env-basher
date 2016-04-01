@@ -9,16 +9,18 @@
 
 # if you want to maintain your own version of this project, feel free to
 # fork it and change the following to reflect your own copy
-gh_user   = 'f4bio'
-gh_repo   = 'vagrant-env-basher'
-gh_branch = 'master' # if you want to ensure consistency, use a specific tag (e.g. v0.1.0)
+gh_user   = "f4bio"
+gh_repo   = "vagrant-env-basher"
+gh_branch = "master" # if you want to ensure consistency, use a specific tag (e.g. v0.1.0)
 gh_url    = "https://raw.githubusercontent.com/#{gh_user}/#{gh_repo}/#{gh_branch}"
 
 # path to provisioning scripts
 scripts_url = "#{gh_url}/scripts"
 
 # if environment is set to development, use local scripts instead
-scripts_url = './scripts' if ENV['ENV'] == 'DEV'
+if ENV["ENV"] == "DEV"
+  scripts_url = "./scripts"
+end
 
 ####
 ##
@@ -26,11 +28,11 @@ scripts_url = './scripts' if ENV['ENV'] == 'DEV'
 ##
 ######
 
-max_memory = 1024
+max_memory = 4096
 
 Vagrant.configure(2) do |config|
   # set the base box
-  config.vm.box = 'ubuntu/trusty64'
+  config.vm.box = "ubuntu/trusty64"
 
   # set up network configuration
   config.vm.network :forwarded_port, guest: 80,  host: 20080
@@ -45,9 +47,9 @@ Vagrant.configure(2) do |config|
   ####
   ## VirtualBox
   ####
-  config.vm.provider 'virtualbox' do |v, _override|
+  config.vm.provider "virtualbox" do |v, _override|
     v.memory = max_memory
-    v.customize ['setextradata', :id, 'VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant', '1']
+    v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
   end
 
   ####
@@ -63,7 +65,7 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: packages to install
-  args_system_packages = "build-essential"
+  args_system_packages = "build-essential fish"
 
   # call base provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/base", args: [args_system_packages]
@@ -129,19 +131,19 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: path to the document root
-  args_nginx_document_root = '/vagrant/public'
+  args_nginx_document_root = "/vagrant/public"
 
   # @param: hostname of the application
-  args_nginx_hostname = 'vagrant-dev-box'
+  args_nginx_hostname = "vagrant-dev-box"
 
   # @param: local ip address of the application
-  args_nginx_ip_address = ''
+  args_nginx_ip_address = ""
 
   # @param: (optional) user to run nginx as, note: if left blank, user will be left as default
-  args_nginx_user = 'vagrant'
+  args_nginx_user = "vagrant"
 
   # @param: (optional) group to run nginx as, note: if left blank, group will be left as default
-  args_nginx_group = 'vagrant'
+  args_nginx_group = "vagrant"
 
   # call nginx provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/nginx", args: [args_nginx_document_root, args_nginx_hostname, args_nginx_ip_address, args_nginx_user, args_nginx_group]
@@ -150,11 +152,11 @@ Vagrant.configure(2) do |config|
   ## node
   ####
 
-  # @param: version of node to install (e.g. 4.2.1). defaults to 'node' for the latest stable version
-  args_node_version = '5.9.1'
+  # @param: version of node to install (e.g. 4.2.1). defaults to "node" for the latest stable version
+  args_node_version = "5.9.1"
 
   # @param: global node packages to install
-  args_node_packages = 'npm node-gyp pm2 gulp sails'
+  args_node_packages = "npm node-gyp pm2 gulp uid-safe sails"
 
   # call node provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/node", args: [args_node_version, args_node_packages]
@@ -164,7 +166,7 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: (optional) location to run `npm install`
-  args_npm_install_dir = '/vagrant'
+  args_npm_install_dir = "/vagrant"
 
   # call npm provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/npm", args: [args_npm_install_dir]
@@ -174,13 +176,13 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: version of ruby to install
-  args_ruby_version = '2.3'
+  args_ruby_version = "2.3"
 
   # @param: (optional) user to run nginx as, note: if left blank, user will be left as default
-  args_ruby_user = 'vagrant'
+  args_ruby_user = "vagrant"
 
   # @param: (optional) group to run nginx as, note: if left blank, group will be left as default
-  args_ruby_group = 'vagrant'
+  args_ruby_group = "vagrant"
 
   # call ruby provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/ruby", args: [args_ruby_version, args_ruby_user, args_ruby_group]

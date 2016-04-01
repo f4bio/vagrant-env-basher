@@ -10,7 +10,7 @@
 
 # if you want to maintain your own version of this project, feel free to
 # fork it and change the following to reflect your own copy
-gh_user   = "drmyersii"
+gh_user   = "f4bio"
 gh_repo   = "vagrant-env-basher"
 gh_branch = "master" # if you want to ensure consistency, use a specific tag (e.g. v0.1.0)
 gh_url    = "https://raw.githubusercontent.com/#{gh_user}/#{gh_repo}/#{gh_branch}"
@@ -38,8 +38,8 @@ Vagrant.configure(2) do |config|
     config.vm.box = "ubuntu/trusty64"
 
     # set up network configuration
-    config.vm.network :forwarded_port, guest: 80,  host: 10080
-    config.vm.network :forwarded_port, guest: 443, host: 10443
+    config.vm.network :forwarded_port, guest: 80,  host: 20080
+    config.vm.network :forwarded_port, guest: 443, host: 20443
 
     ####
     ##
@@ -75,16 +75,16 @@ Vagrant.configure(2) do |config|
         ####
 
         # @param: database name
-        args_mysql_db_name = "dev"
+        # args_mysql_db_name = "dev"
 
         # @param: database user to create
-        args_mysql_db_user = "dev"
+        # args_mysql_db_user = "dev"
 
         # @param: database user's password
-        args_mysql_db_password = "dev"
+        # args_mysql_db_password = "dev"
 
         # @param: allowed hostname for connection to new database
-        args_mysql_db_host = "localhost"
+        # args_mysql_db_host = "localhost"
 
         # call mysql provisioner
         # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/mysql", args: [ args_mysql_db_name, args_mysql_db_user, args_mysql_db_password, args_mysql_db_host ]
@@ -100,19 +100,19 @@ Vagrant.configure(2) do |config|
         ####
 
         # @param: version of php to install
-        args_php_version = "5.6"
+        # args_php_version = "5.6"
 
         # @param: (optional) list of php packages to install, note: if using PhpBrew, make sure you use the available variants. E.g. "+default +fpm +gd". For more info, check the cookbook: https://github.com/phpbrew/phpbrew/wiki/Cookbook
-        args_php_package_list = "php5-mcrypt php5-fpm php5-mysql"
+        # args_php_package_list = "php5-mcrypt php5-fpm php5-mysql"
 
         # @param: (optional) user to run php-fpm as, note: if left blank, user will be left as default
-        args_php_user = "vagrant"
+        # args_php_user = "vagrant"
 
         # @param: (optional) group to run php-fpm as, note: if left blank, group will be left as default
-        args_php_group = "vagrant"
+        # args_php_group = "vagrant"
 
         # @param: (optional) owner to run php-fpm as, note: if left blank, owner will be left as default
-        args_php_owner = "vagrant"
+        # args_php_owner = "vagrant"
 
         # call php provisioner
         # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/php", args: [ args_php_version, args_php_package_list, args_php_user, args_php_group, args_php_owner ]
@@ -123,7 +123,7 @@ Vagrant.configure(2) do |config|
         ####
 
         # @param: (optional) location to run `composer install`
-        args_composer_install_dir = ""
+        # args_composer_install_dir = ""
 
         # call composer provisioner
         # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/composer", args: [ args_composer_install_dir ]
@@ -137,7 +137,7 @@ Vagrant.configure(2) do |config|
         args_nginx_document_root = "/vagrant/public"
 
         # @param: hostname of the application
-        args_nginx_hostname = "_"
+        args_nginx_hostname = "vagrant-dev-box"
 
         # @param: local ip address of the application
         args_nginx_ip_address = ""
@@ -149,7 +149,7 @@ Vagrant.configure(2) do |config|
         args_nginx_group = "vagrant"
 
         # call nginx provisioner
-        # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/nginx", args: [ args_nginx_document_root, args_nginx_hostname, args_nginx_ip_address, args_nginx_user, args_nginx_group ]
+        config.vm.provision :shell, privileged: false, path: "#{scripts_url}/nginx", args: [ args_nginx_document_root, args_nginx_hostname, args_nginx_ip_address, args_nginx_user, args_nginx_group ]
 
 
         ####
@@ -157,13 +157,13 @@ Vagrant.configure(2) do |config|
         ####
 
         # @param: version of node to install (e.g. 4.2.1). defaults to 'node' for the latest stable version
-        args_node_version = "node"
+        args_node_version = "5.9.1"
 
         # @param: global node packages to install
-        args_node_packages = "npm pm2 gulp"
+        args_node_packages = "npm node-gyp pm2 gulp sails"
 
         # call node provisioner
-        # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/node", args: [ args_node_version, args_node_packages ]
+        config.vm.provision :shell, privileged: false, path: "#{scripts_url}/node", args: [ args_node_version, args_node_packages ]
 
 
         ####
@@ -174,7 +174,7 @@ Vagrant.configure(2) do |config|
         args_npm_install_dir = "/vagrant"
 
         # call npm provisioner
-        # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/npm", args: [ args_npm_install_dir ]
+        config.vm.provision :shell, privileged: false, path: "#{scripts_url}/npm", args: [ args_npm_install_dir ]
 
 
         ####
@@ -184,6 +184,12 @@ Vagrant.configure(2) do |config|
         # @param: version of ruby to install
         args_ruby_version = "2.3"
 
+        # @param: (optional) user to run nginx as, note: if left blank, user will be left as default
+        args_ruby_user = "vagrant"
+
+        # @param: (optional) group to run nginx as, note: if left blank, group will be left as default
+        args_ruby_group = "vagrant"
+
         # call ruby provisioner
-        # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/ruby", args: [ args_ruby_version, args_ruby_user, args_ruby_group ]
+        config.vm.provision :shell, privileged: false, path: "#{scripts_url}/ruby", args: [ args_ruby_version, args_ruby_user, args_ruby_group ]
 end

@@ -16,6 +16,8 @@ export DEBIAN_FRONTEND=noninteractive
 # if requested, run npm install in the specified directory
 if [ ! -z "${args_install_dir}" ]; then
   mkdir -p ~/node_modules${args_node_modules_suffix}
-  ln -s ~/node_modules${args_node_modules_suffix} ${args_install_dir}/node_modules
+  mkdir -p ${args_install_dir}/node_modules
+  # ln -s ~/node_modules${args_node_modules_suffix} ${args_install_dir}/node_modules
+  sudo mount --bind ~/node_modules${args_node_modules_suffix} ${args_install_dir}/node_modules
   cd ${args_install_dir} && npm install --silent > /dev/null
 fi

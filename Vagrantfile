@@ -33,8 +33,8 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   # set up network configuration
-  config.vm.network :forwarded_port, guest: 80,  host: 20_080
-  config.vm.network :forwarded_port, guest: 443, host: 20_443
+  config.vm.network :forwarded_port, guest: 80,  host: 20080
+  config.vm.network :forwarded_port, guest: 443, host: 20443
 
   ####
   ##
@@ -73,7 +73,7 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: should latest `git` be installed
-  args_git_enabled = true
+  args_git_enabled = "true"
 
   # call git provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/git", args: [args_git_enabled]
@@ -83,7 +83,7 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: should latest `fish` be installed
-  args_fish_enabled = true
+  args_fish_enabled = "true"
 
   # call fish provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/fish", args: [args_fish_enabled]
@@ -93,7 +93,7 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: should latest `redis` be installed
-  args_redis_enabled = true
+  args_redis_enabled = "true"
 
   # call fish provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/redis", args: [args_redis_enabled]
@@ -103,7 +103,7 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: should latest `mongo` be installed
-  args_mongo_enabled = true
+  args_mongo_enabled = "true"
 
   # call mongo provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/mongo", args: [args_mongo_enabled]

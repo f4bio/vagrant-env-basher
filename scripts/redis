@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# @param: enabled or not?
+args_redis_enabled=${1}
+
+# suppress prompts
+export DEBIAN_FRONTEND=noninteractive
+
+if [ ${args_redis_enabled} = true ]; then
+  # install dependencies necessary for redis installation
+  sudo apt-get -qq install software-properties-common > /dev/null
+
+  # add ppa for redis
+  sudo apt-add-repository -y ppa:chris-lea/redis-server > /dev/null
+
+  # update repository information
+  sudo apt-get -qq update > /dev/null
+
+  # install redis-server
+  sudo apt-get -qq install redis-server > /dev/null
+fi

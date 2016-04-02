@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# @param: enabled or not?
+args_mongo_enabled=${1}
+
+# suppress prompts
+export DEBIAN_FRONTEND=noninteractive
+
+if [ ${args_mongo_enabled} = true ]; then
+  # install dependencies necessary for git installation
+  sudo apt-get -qq install software-properties-common > /dev/null
+  sudo apt-key adv -y --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+
+  # add ppa for git
+  echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | \
+  sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
+  # update repository information
+  sudo apt-get -qq update > /dev/null
+
+  # install git
+  sudo apt-get -qq install mongodb-org > /dev/null
+fi

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# @param: enabled or not?
+args_git_enabled=${1}
+
+# suppress prompts
+export DEBIAN_FRONTEND=noninteractive
+
+if [ ${args_git_enabled} = true ]; then
+  # install dependencies necessary for git installation
+  sudo apt-get -qq install software-properties-common > /dev/null
+
+  # add ppa for git
+  sudo apt-add-repository -y ppa:git-core/ppa > /dev/null
+
+  # update repository information
+  sudo apt-get -qq update > /dev/null
+
+  # install git
+  sudo apt-get -qq install git > /dev/null
+fi

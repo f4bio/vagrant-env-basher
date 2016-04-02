@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# @param: enabled or not?
+args_fish_enabled=${1}
+
+# suppress prompts
+export DEBIAN_FRONTEND=noninteractive
+
+if [ ${args_fish_enabled} = true ]; then
+  # install dependencies necessary for git installation
+  sudo apt-get -qq install software-properties-common curl > /dev/null
+
+  # add ppa for fish
+  sudo apt-add-repository -y ppa:fish-shell/release-2 > /dev/null
+
+  # update repository information
+  sudo apt-get -qq update > /dev/null
+
+  # install fish
+  sudo apt-get -qq install fish > /dev/null
+
+  # install fisherman
+  curl -sL get.fisherman.sh | fish
+
+  # set fish as default shell
+  chsh -s $(which fish)
+fi

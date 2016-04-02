@@ -30,8 +30,7 @@ max_memory = 4096
 
 Vagrant.configure(2) do |config|
   # set the base box
-  # config.vm.box = "ubuntu/trusty64"
-  config.vm.box = "ubuntu/wily64"
+  config.vm.box = "ubuntu/trusty64"
 
   # set up network configuration
   config.vm.network :forwarded_port, guest: 80,  host: 20_080

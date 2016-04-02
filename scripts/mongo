@@ -6,18 +6,19 @@ args_mongo_enabled=${1}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-if [ ${args_mongo_enabled} = true ]; then
-  # install dependencies necessary for git installation
+if [ ${args_mongo_enabled} = "true" ]; then
+  # install dependencies necessary for mongodb installation
   sudo apt-get -qq install software-properties-common > /dev/null
-  sudo apt-key adv -y --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+  #sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+  curl https://www.mongodb.org/static/pgp/server-3.2.asc | sudo apt-key add -
 
-  # add ppa for git
+  # add ppa for mongodb
   echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | \
   sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 
   # update repository information
   sudo apt-get -qq update > /dev/null
 
-  # install git
+  # install mongodb
   sudo apt-get -qq install mongodb-org > /dev/null
 fi

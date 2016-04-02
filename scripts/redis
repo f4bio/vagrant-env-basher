@@ -6,7 +6,7 @@ args_redis_enabled=${1}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-if [ ${args_redis_enabled} = true ]; then
+if [ ${args_redis_enabled} = "true" ]; then
   # install dependencies necessary for redis installation
   sudo apt-get -qq install software-properties-common > /dev/null
 

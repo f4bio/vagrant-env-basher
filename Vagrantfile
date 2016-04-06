@@ -207,7 +207,7 @@ Vagrant.configure(2) do |config|
   args_npm_install_dir = '/vagrant'
 
   # @param: (optional) modules will be located at `~/node_modules<args_node_modules_suffix>`
-  args_npm_node_modules_suffix = '_cloudgate-core'
+  args_npm_node_modules_suffix = '_project-name'
 
   # call npm provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/npm", args: [args_npm_install_dir, args_npm_node_modules_suffix]

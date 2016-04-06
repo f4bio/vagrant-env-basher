@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# @param: (optional) location to run `npm install`
+SCOPE="npm"
+
+# @param: (optional) location to run ``npm install``
 args_install_dir=${1}
 
 # @param: (optional) modules will be located at `~/node_modules<args_node_modules_suffix>`
@@ -9,7 +11,7 @@ args_node_modules_suffix=${2}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting `npm` installer..."
+echo "execting '${SCOPE}' installer..."
 
 # NPM is automatically installed by Node,
 # so we don't have to handle that here
@@ -26,4 +28,4 @@ if [ ! -z "${args_install_dir}" ]; then
   cd ${args_install_dir} && npm install --silent > /dev/null
 fi
 
-echo "`npm` installer successfully executed!"
+echo "'${SCOPE}' installer successfully executed!"

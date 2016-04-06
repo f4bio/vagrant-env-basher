@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+SCOPE="git"
+
 # @param: enabled or not?
 args_git_enabled=${1}
 
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting `git` installer..."
+echo "execting '${SCOPE}' installer..."
 
 if [ ${args_git_enabled} = "true" ]; then
   # install dependencies necessary for git installation
@@ -22,4 +24,4 @@ if [ ${args_git_enabled} = "true" ]; then
   sudo apt-get -qq install git > /dev/null
 fi
 
-echo "`git` installer successfully executed!"
+echo "'${SCOPE}' installer successfully executed!"

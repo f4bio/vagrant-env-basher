@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+SCOPE="mysql"
 
 # @param: name of the DB
 args_db_name=${1}
@@ -16,7 +17,7 @@ args_db_host=${4}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting `mysql` installer..."
+echo "execting '${SCOPE}' installer..."
 
 # install MySQL
 sudo -E apt-get install -qq mysql-server > /dev/null
@@ -27,4 +28,4 @@ mysql -uroot -e "create database ${args_db_name};" > /dev/null
 # create user, and grant all permissions to new DB
 mysql -uroot -e "grant all privileges on ${args_db_name}.* to '${args_db_user}'@'${args_db_host}' identified by '${args_db_pass}';" > /dev/null
 
-echo "`mysql` installer successfully executed!"
+echo "'${SCOPE}' installer successfully executed!"

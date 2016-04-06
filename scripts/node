@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+SCOPE="node"
 
 # @param: version of node to install
 args_node_version=${1}
@@ -11,7 +12,7 @@ args_node_packages=${2}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting `node` installer..."
+echo "execting '${SCOPE}' installer..."
 
 # specify correct sourcing file
 export PROFILE=~/.profile
@@ -36,4 +37,4 @@ if [ ! -z "${args_node_packages}" ]; then
   npm install --global --silent ${args_node_packages} > /dev/null
 fi
 
-echo "`node` installer successfully executed!"
+echo "'${SCOPE}' installer successfully executed!"

@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+SCOPE="mongo"
+
 # @param: enabled or not?
 args_mongo_enabled=${1}
 
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting `mongo` installer..."
+echo "execting '${SCOPE}' installer..."
 
 if [ ${args_mongo_enabled} = "true" ]; then
   # install dependencies necessary for mongodb installation
@@ -25,4 +27,4 @@ if [ ${args_mongo_enabled} = "true" ]; then
   sudo apt-get -qq install mongodb-org > /dev/null
 fi
 
-echo "`mongo` installer successfully executed!"
+echo "'${SCOPE}' installer successfully executed!"

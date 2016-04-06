@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+SCOPE="fish"
+
 # @param: enabled or not?
 args_fish_enabled=${1}
 
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting `fish` installer..."
+echo "execting '${SCOPE}' installer..."
 
 if [ ${args_fish_enabled} = "true" ]; then
   # install dependencies necessary for git installation
@@ -29,4 +31,4 @@ if [ ${args_fish_enabled} = "true" ]; then
   sudo sed -i "s/^vagrant.*:\/bin\/bash/vagrant:x:1000:1000::\/home\/vagrant:\/usr\/bin\/fish/g" /etc/passwd
 fi
 
-echo "`fish` installer successfully executed!"
+echo "'${SCOPE}' installer successfully executed!"

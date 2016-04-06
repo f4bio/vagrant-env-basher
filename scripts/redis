@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+SCOPE="ruby"
+
 # @param: enabled or not?
 args_redis_enabled=${1}
 
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting `redis` installer..."
+echo "execting '${SCOPE}' installer..."
 
 if [ ${args_redis_enabled} = "true" ]; then
   # install dependencies necessary for redis installation
@@ -22,4 +24,4 @@ if [ ${args_redis_enabled} = "true" ]; then
   sudo apt-get -qq install redis-server > /dev/null
 fi
 
-echo "`redis` installer successfully executed!"
+echo "'${SCOPE}' installer successfully executed!"

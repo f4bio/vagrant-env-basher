@@ -13,9 +13,10 @@ args_db_pass=${3}
 # @param: allowed hostname
 args_db_host=${4}
 
-
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
+
+echo "execting `mysql` installer..."
 
 # install MySQL
 sudo -E apt-get install -qq mysql-server > /dev/null
@@ -25,3 +26,5 @@ mysql -uroot -e "create database ${args_db_name};" > /dev/null
 
 # create user, and grant all permissions to new DB
 mysql -uroot -e "grant all privileges on ${args_db_name}.* to '${args_db_user}'@'${args_db_host}' identified by '${args_db_pass}';" > /dev/null
+
+echo "`mysql` installer successfully executed!"

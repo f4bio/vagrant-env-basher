@@ -11,6 +11,8 @@ args_node_packages=${2}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
+echo "execting `node` installer..."
+
 # specify correct sourcing file
 export PROFILE=~/.profile
 
@@ -33,3 +35,5 @@ nvm use ${args_node_version}
 if [ ! -z "${args_node_packages}" ]; then
   npm install --global --silent ${args_node_packages} > /dev/null
 fi
+
+echo "`node` installer successfully executed!"

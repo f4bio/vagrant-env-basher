@@ -191,7 +191,7 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: version of node to install (e.g. 4.2.1). defaults to "node" for the latest stable version
-  args_node_version = '5.9.1'
+  args_node_version = '5'
 
   # @param: global node packages to install
   args_node_packages = 'npm node-gyp pm2 gulp uid-safe sails'

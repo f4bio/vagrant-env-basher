@@ -20,6 +20,8 @@ args_owner=${5}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
+echo "execting `php` installer..."
+
 # determine the best installation method based on the desired version of php
 case ${args_php_version} in
     "5.5")
@@ -168,3 +170,5 @@ case ${args_php_version} in
         fi
         ;;
 esac
+
+echo "`php` installer successfully executed!"

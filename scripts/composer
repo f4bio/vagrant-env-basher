@@ -8,6 +8,8 @@ args_install_dir=${1}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
+echo "execting `composer` installer..."
+
 # download Composer
 curl -sS https://getcomposer.org/installer | php
 
@@ -18,3 +20,5 @@ sudo mv composer.phar /usr/local/bin/composer
 if [ ! -z "${args_install_dir}" ]; then
     cd ${args_install_dir} && composer install
 fi
+
+echo "`composer` installer successfully executed!"

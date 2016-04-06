@@ -6,6 +6,8 @@ args_system_packages=${1}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
+echo "execting `base` installer..."
+
 # update system package archives
 sudo apt-get update -qq > /dev/null
 
@@ -21,3 +23,5 @@ sudo dpkg-reconfigure locales
 
 # update system package archives
 sudo apt-get install ${args_system_packages} -qq > /dev/null
+
+echo "`base` installer successfully executed!"

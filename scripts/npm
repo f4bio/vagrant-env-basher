@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 # @param: (optional) location to run `npm install`
 args_install_dir=${1}
 
@@ -10,14 +9,21 @@ args_node_modules_suffix=${2}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
+echo "execting `npm` installer..."
+
 # NPM is automatically installed by Node,
 # so we don't have to handle that here
 
 # if requested, run npm install in the specified directory
 if [ ! -z "${args_install_dir}" ]; then
-  mkdir -p ~/node_modules${args_node_modules_suffix}
+  mkdir -p $HOME/node_modules${args_node_modules_suffix}
   mkdir -p ${args_install_dir}/node_modules
-  # ln -s ~/node_modules${args_node_modules_suffix} ${args_install_dir}/node_modules
-  sudo mount --bind ~/node_modules${args_node_modules_suffix} ${args_install_dir}/node_modules
+
+  if [ -z $(grep "$HOME/node_modules${args_node_modules_suffix}" /etc/fstab) ]; then
+    echo "$HOME/node_modules${args_node_modules_suffix} ${args_install_dir}/node_modules none defaults,bind 0 0" | sudo tee -a /etc/fstab
+  fi
+
   cd ${args_install_dir} && npm install --silent > /dev/null
 fi
+
+echo "`npm` installer successfully executed!"

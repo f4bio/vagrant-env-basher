@@ -6,6 +6,8 @@ args_redis_enabled=${1}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
+echo "execting `redis` installer..."
+
 if [ ${args_redis_enabled} = "true" ]; then
   # install dependencies necessary for redis installation
   sudo apt-get -qq install software-properties-common > /dev/null
@@ -19,3 +21,5 @@ if [ ${args_redis_enabled} = "true" ]; then
   # install redis-server
   sudo apt-get -qq install redis-server > /dev/null
 fi
+
+echo "`redis` installer successfully executed!"

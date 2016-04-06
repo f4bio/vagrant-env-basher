@@ -6,6 +6,8 @@ args_git_enabled=${1}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
+echo "execting `git` installer..."
+
 if [ ${args_git_enabled} = "true" ]; then
   # install dependencies necessary for git installation
   sudo apt-get -qq install software-properties-common > /dev/null
@@ -19,3 +21,5 @@ if [ ${args_git_enabled} = "true" ]; then
   # install git
   sudo apt-get -qq install git > /dev/null
 fi
+
+echo "`git` installer successfully executed!"

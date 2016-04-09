@@ -9,16 +9,16 @@
 
 # if you want to maintain your own version of this project, feel free to
 # fork it and change the following to reflect your own copy
-gh_user   = 'f4bio'
-gh_repo   = 'vagrant-env-basher'
-gh_branch = 'master' # if you want to ensure consistency, use a specific tag (e.g. v0.1.0)
+gh_user   = "f4bio"
+gh_repo   = "vagrant-env-basher"
+gh_branch = "master" # if you want to ensure consistency, use a specific tag (e.g. v0.1.0)
 gh_url    = "https://raw.githubusercontent.com/#{gh_user}/#{gh_repo}/#{gh_branch}"
 
 # path to provisioning scripts
 scripts_url = "#{gh_url}/scripts"
 
 # if environment is set to development, use local scripts instead
-scripts_url = './scripts' if ENV['ENV'] == 'DEV'
+scripts_url = "./scripts" if ENV["ENV"] == "DEV"
 
 ####
 ##
@@ -45,9 +45,9 @@ Vagrant.configure(2) do |config|
   ####
   ## VirtualBox
   ####
-  config.vm.provider 'virtualbox' do |v, _override|
+  config.vm.provider "virtualbox" do |v, _override|
     v.memory = max_memory
-    v.customize ['setextradata', :id, 'VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant', '1']
+    v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
   end
 
   ####
@@ -72,45 +72,48 @@ Vagrant.configure(2) do |config|
   ## git
   ####
 
-  # @param: should latest `git` be installed
-  args_git_enabled = "true"
+  # @param: version of git to install. defaults to latest stable version. use -1 to skip
+  args_git_version = "latest"
 
   # call git provisioner
-  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/git", args: [args_git_enabled]
+  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/git", args: [args_git_version]
 
   ####
   ## fish
   ####
 
-  # @param: should latest `fish` be installed
-  args_fish_enabled = "true"
+  # @param: version of fish to install. defaults to latest stable version. use -1 to skip
+  args_fish_version = "latest"
 
   # call fish provisioner
-  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/fish", args: [args_fish_enabled]
+  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/fish", args: [args_fish_version]
 
   ####
   ## redis
   ####
 
-  # @param: should latest `redis` be installed
-  args_redis_enabled = "true"
+  # @param: version of redis to install. defaults to latest stable version. use -1 to skip
+  args_redis_version = "latest"
 
   # call fish provisioner
-  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/redis", args: [args_redis_enabled]
+  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/redis", args: [args_redis_version]
 
   ####
   ## mongo
   ####
 
-  # @param: should latest `mongo` be installed
-  args_mongo_enabled = "true"
+  # @param: version of mongo to install. defaults to latest stable version. use -1 to skip
+  args_mongo_version = "latest"
 
   # call mongo provisioner
-  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/mongo", args: [args_mongo_enabled]
+  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/mongo", args: [args_mongo_version]
 
   ####
   ## mysql
   ####
+
+  # @param: version of mysql to install. defaults to latest stable version. use -1 to skip
+  args_mysql_version = "-1"
 
   # @param: database name
   # args_mysql_db_name = "dev"
@@ -125,7 +128,7 @@ Vagrant.configure(2) do |config|
   # args_mysql_db_host = "localhost"
 
   # call mysql provisioner
-  # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/mysql", args: [ args_mysql_db_name, args_mysql_db_user, args_mysql_db_password, args_mysql_db_host ]
+  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/mysql", args: [args_mysql_version, args_mysql_db_name, args_mysql_db_user, args_mysql_db_password, args_mysql_db_host ]
 
   ####
   ## php
@@ -158,43 +161,49 @@ Vagrant.configure(2) do |config|
   ## composer
   ####
 
+  # @param: version of composer to install. defaults to latest stable version. use -1 to skip
+  args_composer_version = "-1"
+
   # @param: (optional) location to run `composer install`
   # args_composer_install_dir = ""
 
   # call composer provisioner
-  # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/composer", args: [ args_composer_install_dir ]
+  # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/composer", args: [args_composer_version, args_composer_install_dir ]
 
   ####
   ## nginx
   ####
 
+  # @param: version of nginx to install. defaults to latest stable version. use -1 to skip
+  args_nginx_version = "latest"
+
   # @param: path to the document root
-  args_nginx_document_root = '/vagrant/public'
+  args_nginx_document_root = "/vagrant/public"
 
   # @param: hostname of the application
-  args_nginx_hostname = 'vagrant-dev-box'
+  args_nginx_hostname = "vagrant-dev-box"
 
   # @param: local ip address of the application
-  args_nginx_ip_address = ''
+  args_nginx_ip_address = ""
 
   # @param: (optional) user to run nginx as, note: if left blank, user will be left as default
-  args_nginx_user = 'vagrant'
+  args_nginx_user = "vagrant"
 
   # @param: (optional) group to run nginx as, note: if left blank, group will be left as default
-  args_nginx_group = 'vagrant'
+  args_nginx_group = "vagrant"
 
   # call nginx provisioner
-  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/nginx", args: [args_nginx_document_root, args_nginx_hostname, args_nginx_ip_address, args_nginx_user, args_nginx_group]
+  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/nginx", args: [args_nginx_version, args_nginx_document_root, args_nginx_hostname, args_nginx_ip_address, args_nginx_user, args_nginx_group]
 
   ####
   ## node
   ####
 
   # @param: version of node to install (e.g. 4.2.1). defaults to "node" for the latest stable version
-  args_node_version = '5'
+  args_node_version = "5"
 
   # @param: global node packages to install
-  args_node_packages = 'npm node-gyp pm2 gulp uid-safe sails'
+  args_node_packages = "npm node-gyp pm2 gulp sails"
 
   # call node provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/node", args: [args_node_version, args_node_packages]
@@ -204,10 +213,10 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: (optional) location to run `npm install`
-  args_npm_install_dir = '/vagrant'
+  args_npm_install_dir = "/vagrant"
 
   # @param: (optional) modules will be located at `~/node_modules<args_node_modules_suffix>`
-  args_npm_node_modules_suffix = '_project-name'
+  args_npm_node_modules_suffix = "_project-name"
 
   # call npm provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/npm", args: [args_npm_install_dir, args_npm_node_modules_suffix]
@@ -217,13 +226,13 @@ Vagrant.configure(2) do |config|
   ####
 
   # @param: version of ruby to install
-  args_ruby_version = '2.3'
+  args_ruby_version = "2.3"
 
   # @param: (optional) user to run nginx as, note: if left blank, user will be left as default
-  args_ruby_user = 'vagrant'
+  args_ruby_user = "vagrant"
 
   # @param: (optional) group to run nginx as, note: if left blank, group will be left as default
-  args_ruby_group = 'vagrant'
+  args_ruby_group = "vagrant"
 
   # call ruby provisioner
   config.vm.provision :shell, privileged: false, path: "#{scripts_url}/ruby", args: [args_ruby_version, args_ruby_user, args_ruby_group]

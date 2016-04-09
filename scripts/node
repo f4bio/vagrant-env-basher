@@ -8,33 +8,40 @@ args_node_version=${1}
 # @param: global node packages to install
 args_node_packages=${2}
 
-
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting '${SCOPE}' installer..."
+case ${args_node_version} in
+  "-1")
+    echo "skipping '${SCOPE}' installer..."
+    ;;
+  *)
+    echo "execting '${SCOPE}' installer..."
 
-# specify correct sourcing file
-export PROFILE=~/.profile
+    # specify correct sourcing file
+    export PROFILE=~/.profile
 
-# download and install nvm
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+    # download and install nvm
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
 
-# make sure nvm binary is accessible during this session
-source ~/.nvm/nvm.sh
+    # make sure nvm binary is accessible during this session
+    source ~/.nvm/nvm.sh
 
-# install specified version of node
-nvm install ${args_node_version}
+    # install specified version of node
+    nvm install ${args_node_version}
 
-# set the specifed version of node as the default version to use
-nvm alias default ${args_node_version}
+    # set the specifed version of node as the default version to use
+    nvm alias default ${args_node_version}
 
-# make sure to use the specified version of node for this session
-nvm use ${args_node_version}
+    # make sure to use the specified version of node for this session
+    nvm use ${args_node_version}
 
-# if a string list of packages is passed in, install those packages
-if [ ! -z "${args_node_packages}" ]; then
-  npm install --global --silent ${args_node_packages} > /dev/null
-fi
+    # if a string list of packages is passed in, install those packages
+    if [ ! -z "${args_node_packages}" ]; then
+      # npm install --global --silent ${args_node_packages} > /dev/null
+      npm install --global ${args_node_packages}
+    fi
 
-echo "'${SCOPE}' installer successfully executed!"
+    echo "'${SCOPE}' installer successfully executed!"
+    ;;
+esac

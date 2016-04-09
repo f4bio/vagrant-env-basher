@@ -5,16 +5,16 @@ SCOPE="ruby"
 # @param: version of ruby to install (e.g. 2.3)
 args_ruby_version=${1}
 
-
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting '${SCOPE}' installer..."
-
 # determine the best installation method based on the desired version of ruby
 case ${args_ruby_version} in
-    "2.3")
-
+  "-1")
+    echo "skipping '${SCOPE}' installer..."
+    ;;
+  *)
+    echo "execting '${SCOPE}' installer..."
 
     # install dependencies necessary for ruby installation
     sudo apt-get -qq install software-properties-common > /dev/null
@@ -34,8 +34,6 @@ case ${args_ruby_version} in
     # install bundler
     # sudo gem2.3 install bundler > /dev/null
 
-
+    echo "'${SCOPE}' installer successfully executed!"
     ;;
 esac
-
-echo "'${SCOPE}' installer successfully executed!"

@@ -2,29 +2,34 @@
 
 SCOPE="mongo"
 
-# @param: enabled or not?
-args_mongo_enabled=${1}
+# @param: version of mongodb to install
+args_mongo_version=${1}
 
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting '${SCOPE}' installer..."
+case ${args_mongo_version} in
+  "-1")
+    echo "skipping '${SCOPE}' installer..."
+    ;;
+  *)
+    echo "execting '${SCOPE}' installer..."
 
-if [ ${args_mongo_enabled} = "true" ]; then
-  # install dependencies necessary for mongodb installation
-  sudo apt-get -qq install software-properties-common > /dev/null
-  #sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-  curl https://www.mongodb.org/static/pgp/server-3.2.asc | sudo apt-key add -
+    # install dependencies necessary for mongodb installation
+    sudo apt-get -qq install software-properties-common > /dev/null
+    #sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+    curl https://www.mongodb.org/static/pgp/server-3.2.asc | sudo apt-key add -
 
-  # add ppa for mongodb
-  echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | \
-  sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+    # add ppa for mongodb
+    echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | \
+    sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 
-  # update repository information
-  sudo apt-get -qq update > /dev/null
+    # update repository information
+    sudo apt-get -qq update > /dev/null
 
-  # install mongodb
-  sudo apt-get -qq install mongodb-org > /dev/null
-fi
+    # install mongodb
+    sudo apt-get -qq install mongodb-org > /dev/null
 
-echo "'${SCOPE}' installer successfully executed!"
+    echo "'${SCOPE}' installer successfully executed!"
+    ;;
+esac

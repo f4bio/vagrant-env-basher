@@ -11,13 +11,13 @@ args_node_modules_suffix=${2}
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
-echo "execting '${SCOPE}' installer..."
-
 # NPM is automatically installed by Node,
 # so we don't have to handle that here
 
 # if requested, run npm install in the specified directory
 if [ ! -z "${args_install_dir}" ]; then
+  echo "execting '${SCOPE}' installer..."
+
   mkdir -p $HOME/node_modules${args_node_modules_suffix}
   mkdir -p ${args_install_dir}/node_modules
 
@@ -26,6 +26,8 @@ if [ ! -z "${args_install_dir}" ]; then
   fi
 
   cd ${args_install_dir} && npm install --silent > /dev/null
-fi
 
-echo "'${SCOPE}' installer successfully executed!"
+  echo "'${SCOPE}' installer successfully executed!"
+else
+  echo "skipping '${SCOPE}' installer..."
+fi

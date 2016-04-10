@@ -5,6 +5,9 @@ SCOPE="fish"
 # @param: version of fish to install
 args_fish_version=${1}
 
+# @param: additional fisherman packages to install
+args_fish_fisherman_packages=${2}
+
 # suppress prompts
 export DEBIAN_FRONTEND=noninteractive
 
@@ -29,7 +32,7 @@ case ${args_fish_version} in
 
     # install fisherman
     curl -sL get.fisherman.sh | fish > /dev/null
-    fisher install cmorrell edc/bass f4bio/fisher-nvm > /dev/null
+    fish -c "fisher install cmorrell.com edc/bass f4bio/fisher-nvm ${args_fish_fisherman_packages}> /dev/null"
 
     # set fish as default shell
     sudo sed -i "s/^vagrant.*:\/bin\/bash/vagrant:x:1000:1000::\/home\/vagrant:\/usr\/bin\/fish/g" /etc/passwd

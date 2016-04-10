@@ -85,8 +85,11 @@ Vagrant.configure(2) do |config|
   # @param: version of fish to install. defaults to latest stable version. use -1 to skip
   args_fish_version = "latest"
 
+  # @param: additional fisherman packages to install
+  args_fish_fisherman_packages = ""
+
   # call fish provisioner
-  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/fish", args: [args_fish_version]
+  config.vm.provision :shell, privileged: false, path: "#{scripts_url}/fish", args: [args_fish_version, args_fish_fisherman_packages]
 
   ####
   ## redis

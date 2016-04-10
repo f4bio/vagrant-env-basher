@@ -24,6 +24,7 @@ if [ ! -z "${args_install_dir}" ]; then
   if [ -z $(grep "$HOME/node_modules${args_node_modules_suffix}" /etc/fstab) ]; then
     echo "$HOME/node_modules${args_node_modules_suffix} ${args_install_dir}/node_modules none defaults,bind 0 0" | sudo tee -a /etc/fstab
   fi
+  sudo mount --bind $HOME/node_modules${args_node_modules_suffix} ${args_install_dir}/node_modules
 
   cd ${args_install_dir} && npm install --silent > /dev/null
 

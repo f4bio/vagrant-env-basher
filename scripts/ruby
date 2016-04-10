@@ -32,7 +32,7 @@ case ${args_ruby_version} in
     sudo apt-get -qq install ruby2.3-dev > /dev/null
 
     # install bundler
-    # sudo gem2.3 install bundler > /dev/null
+    sudo gem2.3 install bundler > /dev/null
 
     echo "'${SCOPE}' installer successfully executed!"
     ;;

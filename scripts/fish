@@ -31,8 +31,8 @@ case ${args_fish_version} in
     sudo apt-get -qq install fish > /dev/null
 
     # install fisherman
-    curl -sL get.fisherman.sh | fish > /dev/null
-    fish -c "fisher install cmorrell.com edc/bass f4bio/fisher-nvm ${args_fish_fisherman_packages}> /dev/null"
+    fish -c "curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisherman > /dev/null"
+    fish -c "fisher bobthefish edc/bass fin ${args_fish_fisherman_packages}> /dev/null"
 
     # set fish as default shell
     sudo sed -i "s/^vagrant.*:\/bin\/bash/vagrant:x:1000:1000::\/home\/vagrant:\/usr\/bin\/fish/g" /etc/passwd

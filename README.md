@@ -1,3 +1,3 @@
-# PROJECT_NAME
+# vagrant-env-basher (personalized)
 
-PROJECT_DESCRIPTION
+DEPRECATED. Use e.g.: http://rove.io/
